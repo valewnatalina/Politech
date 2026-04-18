@@ -103,9 +103,15 @@
             </table>
         </div>
         {% else %}
-        <div class="estado-vazio">
-            <p>Nenhum levantamento encontrado com esses filtros.</p>
-            <a href="/novo" class="botao-principal pequeno">Criar novo levantamento</a>
+        <div class="estado-vazio estado-vazio-bonito">
+            <div class="estado-vazio-icone">◌</div>
+    
+            <p>
+                Não há levantamentos cadastrados ainda ou nenhum resultado corresponde
+                aos filtros informados. 
+            </p>
+            
+            <a href="/novo" class="botao-principal">Criar novo levantamento</a>
         </div>
         {% endif %}
     </section>

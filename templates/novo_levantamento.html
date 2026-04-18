@@ -54,9 +54,14 @@
                 </select>
             </div>
 
-            <div class="grupo-form">
-                <label for="azimute_inicial">Azimute inicial</label>
-                <input type="number" step="any" id="azimute_inicial" name="azimute_inicial" min="0" max="359.999999" required>
+            <div class="grupo-form grupo-form-linha-completa">
+                <label>Azimute inicial (GMS)</label>
+                <div class="linha-campos-curtos">
+                    <input type="number" name="azimute_graus" min="0" max="359" placeholder="Graus" required>
+                    <input type="number" name="azimute_minutos" min="0" max="59" placeholder="Minutos" required>
+                    <input type="number" step="any" name="azimute_segundos" min="0" max="59.999999"
+                        placeholder="Segundos" required>
+                </div>
             </div>
 
             <div class="grupo-form">
@@ -67,6 +72,12 @@
             <div class="grupo-form">
                 <label for="y_inicial">Coordenada Y inicial</label>
                 <input type="number" step="any" id="y_inicial" name="y_inicial" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="tolerancia_angular_segundos">Tolerância angular (segundos)</label>
+                <input type="number" step="any" id="tolerancia_angular_segundos" name="tolerancia_angular_segundos"
+                    min="0.000001" required>
             </div>
 
             <div class="grupo-form grupo-form-destaque">
@@ -80,6 +91,10 @@
             <div class="acoes-form acoes-form-largas">
                 <button type="submit" class="botao-principal">Salvar e continuar</button>
                 <a href="/levantamentos" class="botao-secundario">Cancelar</a>
+            </div>
+            <div class="grupo-form">
+                <label for="ponto_azimute">Ponto do azimute conhecido</label>
+                <input type="number" id="ponto_azimute" name="ponto_azimute" min="1" required>
             </div>
         </form>
     </section>

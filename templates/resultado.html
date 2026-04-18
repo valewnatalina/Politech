@@ -9,14 +9,14 @@
             <span class="etiqueta">Resultado do cálculo</span>
             <h1>{{ nome }}</h1>
             <p>
-                Visualização técnica da poligonal com fórmulas, sequência de cálculo
-                em 15 etapas, compensações, coordenadas e conferência final.
+                Visualização técnica da poligonal com resumo, etapas de cálculo,
+                compensações, coordenadas e conferência final.
             </p>
         </div>
 
         <div class="atalhos-resultado">
             <a href="#resumo-geral" class="atalho-resultado-link">Resumo</a>
-            <a href="#passo-a-passo" class="atalho-resultado-link">15 etapas aplicadas</a>
+            <a href="#passo-a-passo" class="atalho-resultado-link">15 etapas</a>
             <a href="#detalhamento-lados" class="atalho-resultado-link">Lados</a>
             <a href="#coordenadas-pontos" class="atalho-resultado-link">Coordenadas</a>
             <a href="#distancias-corrigidas" class="atalho-resultado-link">Distâncias</a>
@@ -86,7 +86,7 @@
 
             <article class="card card-resultado">
                 <h3>Correção por ângulo</h3>
-                <p>{{ "%.0f"|format(correcao_por_angulo) }}</p>
+                <p>{{ "%.6f"|format(correcao_por_angulo) }}</p>
             </article>
 
             <article class="card card-resultado">
@@ -158,8 +158,8 @@
             <span class="etiqueta">15 etapas aplicadas</span>
             <h1>Descrição do cálculo desta poligonal</h1>
             <p>
-                Aqui a sequência está aplicada especificamente ao levantamento atual,
-                sem repetir a metodologia geral.
+                A sequência abaixo segue a lógica de cálculo e ajuste da poligonal fechada
+                mostrada na Aula 05. :contentReference[oaicite:1]{index=1}
             </p>
         </div>
 
@@ -174,29 +174,29 @@
             <article class="passo-calculo">
                 <h3>2. Soma teórica correspondente</h3>
                 <div class="formula-box">
-                    <p>Para esta poligonal, usando a fórmula <strong>{{ formula_soma_teorica }}</strong>, obteve-se a soma teórica de <strong>{{ "%.0f"|format(soma_teorica) }}</strong>.</p>
+                    <p>Usando a fórmula <strong>{{ formula_soma_teorica }}</strong>, obteve-se a soma teórica de <strong>{{ "%.0f"|format(soma_teorica) }}</strong>.</p>
                 </div>
             </article>
 
             <article class="passo-calculo">
                 <h3>3. Erro angular cometido</h3>
                 <div class="formula-box">
-                    <p>Comparando a soma medida com a soma teórica, o erro angular encontrado foi <strong>{{ "%.0f"|format(erro_angular) }}</strong>.</p>
+                    <p>Comparando a soma medida com a soma teórica, o erro angular encontrado foi <strong>{{ "%.6f"|format(erro_angular) }}</strong>.</p>
                 </div>
             </article>
 
             <article class="passo-calculo">
                 <h3>4. Verificação da tolerância angular</h3>
                 <div class="formula-box">
-                    <p>A tolerância angular admissível foi <strong>{{ "%.0f"|format(tolerancia_segundos) }}"</strong>.</p>
-                    <p>O erro angular em segundos foi <strong>{{ "%.0f"|format(erro_angular_segundos) }}"</strong>.</p>
+                    <p>A tolerância angular adotada foi <strong>{{ "%.3f"|format(tolerancia_segundos) }}"</strong>.</p>
+                    <p>O erro angular em segundos foi <strong>{{ "%.3f"|format(erro_angular_segundos) }}"</strong>.</p>
                 </div>
             </article>
 
             <article class="passo-calculo">
                 <h3>5. Correção angular aplicada</h3>
                 <div class="formula-box">
-                    <p>A correção distribuída por ângulo foi <strong>{{ "%.0f"|format(correcao_por_angulo) }}</strong>.</p>
+                    <p>A correção distribuída por ângulo foi <strong>{{ "%.6f"|format(correcao_por_angulo) }}</strong>.</p>
                 </div>
             </article>
 
@@ -208,23 +208,23 @@
             </article>
 
             <article class="passo-calculo">
-                <h3>7. Azimutes dos alinhamentos</h3>
+                <h3>7. Distâncias horizontais adotadas</h3>
                 <div class="formula-box">
-                    <p>Os azimutes foram determinados considerando o tipo de ângulo <strong>{{ tipo_angulo }}</strong> e o sentido <strong>{{ sentido }}</strong>, seguindo a regra da sequência de cálculo da poligonal fechada.</p>
+                    <p>Para cada lado, foram utilizadas as distâncias cadastradas no levantamento como base para o cálculo das projeções.</p>
                 </div>
             </article>
 
             <article class="passo-calculo">
-                <h3>8. Distâncias horizontais adotadas</h3>
+                <h3>8. Cálculo dos azimutes</h3>
                 <div class="formula-box">
-                    <p>Para cada lado, foram utilizadas as distâncias cadastradas no levantamento, servindo de base para o cálculo das projeções parciais.</p>
+                    <p>Os azimutes foram determinados considerando o tipo de ângulo <strong>{{ tipo_angulo }}</strong> e o sentido <strong>{{ sentido }}</strong>, conforme a regra de caminhamento da poligonal. :contentReference[oaicite:2]{index=2}</p>
                 </div>
             </article>
 
             <article class="passo-calculo">
                 <h3>9. Projeções parciais</h3>
                 <div class="formula-box">
-                    <p>Com base nas distâncias e azimutes, foram calculadas as projeções ΔX e ΔY de cada alinhamento.</p>
+                    <p>Com base nas distâncias e nos azimutes, foram calculadas as projeções ΔX e ΔY de cada alinhamento. :contentReference[oaicite:3]{index=3}</p>
                 </div>
             </article>
 
@@ -248,7 +248,7 @@
                                 1:{{ "%.0f"|format(modulo_escala) }}
                             {% endif %}
                         </strong>,
-                        comparado ao critério mínimo de <strong>1:{{ criterio_minimo }}</strong>.
+                        comparado ao critério mínimo de <strong>1:{{ criterio_minimo }}</strong>. :contentReference[oaicite:4]{index=4}
                     </p>
                 </div>
             </article>
@@ -256,7 +256,7 @@
             <article class="passo-calculo">
                 <h3>12. Distribuição do erro linear</h3>
                 <div class="formula-box">
-                    <p>Os erros de fechamento linear foram distribuídos proporcionalmente às distâncias de cada lado, gerando as correções em X e Y.</p>
+                    <p>Os erros de fechamento linear foram distribuídos proporcionalmente às distâncias de cada lado, gerando as correções em X e Y. :contentReference[oaicite:5]{index=5}</p>
                 </div>
             </article>
 
@@ -272,14 +272,14 @@
             <article class="passo-calculo">
                 <h3>14. Coordenadas totais</h3>
                 <div class="formula-box">
-                    <p>As coordenadas finais de cada vértice foram obtidas pela soma sucessiva das projeções compensadas às coordenadas anteriores.</p>
+                    <p>As coordenadas finais de cada vértice foram obtidas pela soma sucessiva das projeções compensadas às coordenadas anteriores. :contentReference[oaicite:6]{index=6}</p>
                 </div>
             </article>
 
             <article class="passo-calculo">
                 <h3>15. Distâncias corrigidas</h3>
                 <div class="formula-box">
-                    <p>Ao final, foram calculadas as distâncias corrigidas de cada lado com base nas projeções compensadas.</p>
+                    <p>Ao final, foram calculadas as distâncias corrigidas de cada lado com base nas projeções compensadas. :contentReference[oaicite:7]{index=7}</p>
                 </div>
             </article>
         </div>
@@ -299,9 +299,9 @@
 
                 <div class="formula-box">
                     <p><strong>Distância:</strong> {{ "%.3f"|format(distancias[i]) }}</p>
-                    <p><strong>Ângulo medido:</strong> {{ "%.0f"|format(angulos[i]) }}</p>
-                    <p><strong>Ângulo compensado:</strong> {{ "%.0f"|format(angulos_compensados[i]) }}</p>
-                    <p><strong>Azimute:</strong> {{ "%.0f"|format(azimutes[i]) }}</p>
+                    <p><strong>Ângulo medido:</strong> {{ "%.6f"|format(angulos[i]) }}</p>
+                    <p><strong>Ângulo compensado:</strong> {{ "%.6f"|format(angulos_compensados[i]) }}</p>
+                    <p><strong>Azimute:</strong> {{ "%.6f"|format(azimutes[i]) }}</p>
                 </div>
 
                 <div class="formula-box" style="margin-top: 12px;">

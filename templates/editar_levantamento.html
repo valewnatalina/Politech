@@ -30,41 +30,53 @@
             <div class="grupo-form">
                 <label for="criterio_precisao">Critério mínimo de precisão</label>
                 <select id="criterio_precisao" name="criterio_precisao" required>
-                    <option value="1000" {% if levantamento[9] == 1000 %}selected{% endif %}>1:1000</option>
-                    <option value="5000" {% if levantamento[9] == 5000 %}selected{% endif %}>1:5000</option>
-                    <option value="10000" {% if levantamento[9] == 10000 %}selected{% endif %}>1:10000</option>
+                    <option value="1000" {% if levantamento[12]==1000 %}selected{% endif %}>1:1000</option>
+                    <option value="5000" {% if levantamento[12]==5000 %}selected{% endif %}>1:5000</option>
+                    <option value="10000" {% if levantamento[12]==10000 %}selected{% endif %}>1:10000</option>
                 </select>
             </div>
 
             <div class="grupo-form">
                 <label for="tipo_angulo">Tipo de ângulo</label>
                 <select id="tipo_angulo" name="tipo_angulo" required>
-                    <option value="interno" {% if levantamento[4] == 'interno' %}selected{% endif %}>Interno</option>
-                    <option value="externo" {% if levantamento[4] == 'externo' %}selected{% endif %}>Externo</option>
+                    <option value="interno" {% if levantamento[4]=='interno' %}selected{% endif %}>Interno</option>
+                    <option value="externo" {% if levantamento[4]=='externo' %}selected{% endif %}>Externo</option>
                 </select>
             </div>
 
             <div class="grupo-form">
                 <label for="sentido">Sentido</label>
                 <select id="sentido" name="sentido" required>
-                    <option value="horario" {% if levantamento[5] == 'horario' %}selected{% endif %}>Horário</option>
-                    <option value="anti-horario" {% if levantamento[5] == 'anti-horario' %}selected{% endif %}>Anti-horário</option>
+                    <option value="horario" {% if levantamento[5]=='horario' %}selected{% endif %}>Horário</option>
+                    <option value="anti-horario" {% if levantamento[5]=='anti-horario' %}selected{% endif %}>
+                        Anti-horário</option>
                 </select>
             </div>
 
-            <div class="grupo-form">
-                <label for="azimute_inicial">Azimute inicial</label>
-                <input type="number" step="any" id="azimute_inicial" name="azimute_inicial" min="0" max="359.999999" value="{{ levantamento[6] }}" required>
+            <div class="grupo-form grupo-form-linha-completa">
+                <label>Azimute inicial (GMS)</label>
+                <div class="linha-campos-curtos">
+                    <input type="number" name="azimute_graus" min="0" max="359" value="{{ levantamento[6] }}" required>
+                    <input type="number" name="azimute_minutos" min="0" max="59" value="{{ levantamento[7] }}" required>
+                    <input type="number" step="any" name="azimute_segundos" min="0" max="59.999999"
+                        value="{{ levantamento[8] }}" required>
+                </div>
             </div>
 
             <div class="grupo-form">
                 <label for="x_inicial">Coordenada X inicial</label>
-                <input type="number" step="any" id="x_inicial" name="x_inicial" value="{{ levantamento[7] }}" required>
+                <input type="number" step="any" id="x_inicial" name="x_inicial" value="{{ levantamento[9] }}" required>
             </div>
 
             <div class="grupo-form">
                 <label for="y_inicial">Coordenada Y inicial</label>
-                <input type="number" step="any" id="y_inicial" name="y_inicial" value="{{ levantamento[8] }}" required>
+                <input type="number" step="any" id="y_inicial" name="y_inicial" value="{{ levantamento[10] }}" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="tolerancia_angular_segundos">Tolerância angular (segundos)</label>
+                <input type="number" step="any" id="tolerancia_angular_segundos" name="tolerancia_angular_segundos"
+                    value="{{ levantamento[11] }}" required>
             </div>
 
             <div class="grupo-form grupo-form-destaque">
@@ -78,6 +90,11 @@
             <div class="acoes-form acoes-form-largas">
                 <button type="submit" class="botao-principal">Salvar alterações</button>
                 <a href="/levantamentos/{{ levantamento[0] }}" class="botao-secundario">Cancelar</a>
+            </div>
+            <div class="grupo-form">
+                <label for="ponto_azimute">Ponto do azimute conhecido</label>
+                <input type="number" id="ponto_azimute" name="ponto_azimute" min="1"
+                    value="{{ levantamento['ponto_azimute'] }}" required>
             </div>
         </form>
     </section>

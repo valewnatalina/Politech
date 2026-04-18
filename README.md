@@ -70,3 +70,32 @@ politech/
 │  └─ img/
 ├─ instance/
 ├─ graficos/
+
+# Clonar o repositório
+git clone https://github.com/SEU-USUARIO/politech.git
+
+# Entrar na pasta
+cd politech
+
+# Instalar dependências
+pip install flask
+
+# Executar o sistema
+python app.py
+
+Acesse no navegador: http://127.0.0.1:5000
+
+⚠️ Status do projeto
+
+🚧 Projeto em desenvolvimento
+
+Atualmente, o sistema está com a estrutura principal da interface e organização lógica implementadas, porém ainda existem etapas em andamento:
+
+❗ Implementação completa do banco de dados
+❗ Ajustes e validações nos cálculos da poligonal fechada
+❗ Integração total entre interface e processamento dos dados
+❗ Refinamento dos resultados e validações topográficas
+
+🚀 Próximas melhorias
+Implementação completa do banco de dados (persistência dos levantamentos)
+Finalização do motor de cálculo da poligonal

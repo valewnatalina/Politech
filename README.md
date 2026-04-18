@@ -79,6 +79,11 @@ Atualmente, o sistema está com a estrutura principal da interface e organizaç�
 
 ❗ Refinamento dos resultados e validações topográficas
 
+# 📸 Preview do sitema
+
+![Preview do sistema](print1.png)
+
+
 ## 📂 Estrutura do projeto
 
 ```bash

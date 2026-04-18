@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Passo a passo | Politech{% endblock %}
+
+{% block content %}
+<main class="pagina-interna">
+    <div class="metodologia-layout">
+        <section class="painel-formulario metodologia-bloco-principal metodologia-principal">
+            <div class="cabecalho-pagina">
+                <span class="etiqueta">Metodologia</span>
+                <h1>Passo a passo do ajuste da poligonal fechada</h1>
+                <p>
+                    Sequência organizada conforme a Aula 05, com a ordem das 15 etapas
+                    do cálculo e ajuste da poligonal fechada.
+                </p>
+            </div>
+
+            <div class="passos-calculo">
+                <article class="passo-calculo">
+                    <h3>1. Cálculo da soma dos ângulos externos ou internos</h3>
+                    <div class="formula-box">
+                        <p><strong>Ângulos internos:</strong> Σαᵢ = 180 × (n - 2)</p>
+                        <p><strong>Ângulos externos:</strong> Σαₑ = 180 × (n + 2)</p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>2. Cálculo do erro angular cometido</h3>
+                    <div class="formula-box">
+                        <p><strong>Fórmula:</strong> e = Σα campo - Σα teórico</p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>3. Cálculo da tolerância angular</h3>
+                    <div class="formula-box">
+                        <p><strong>Fórmula geral:</strong> Tα = b × √N</p>
+                        <p><strong>Usado na aula:</strong> Tα = 15" × √N</p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>4. Correção do erro angular</h3>
+                    <div class="formula-box">
+                        <p><strong>Fórmula:</strong> Cα = -e / n</p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>5. Cálculo do ângulo compensado</h3>
+                    <div class="formula-box">
+                        <p><strong>Fórmula:</strong> α' = α ± Cα</p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>6. Cálculo dos azimutes de vante e ré</h3>
+                    <div class="formula-box">
+                        <p><strong>Fórmula:</strong> Azn = Azn-1 ± an ± 180</p>
+                        <p><strong>Horário:</strong> + ângulo externo, - ângulo interno</p>
+                        <p><strong>Anti-horário:</strong> + ângulo interno, - ângulo externo</p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>7. Cálculo das distâncias horizontais</h3>
+                    <div class="formula-box">
+                        <p>Considera-se a média entre a distância calculada do vértice de ré para vante e de vante para ré.</p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>8. Cálculo das coordenadas parciais (projeções)</h3>
+                    <div class="formula-box">
+                        <p><strong>ΔXp = D · sen(Az)</strong></p>
+                        <p><strong>ΔYp = D · cos(Az)</strong></p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>9. Cálculo do erro de fechamento linear nos eixos</h3>
+                    <div class="formula-box">
+                        <p><strong>Ex = ΣΔXp</strong></p>
+                        <p><strong>Ey = ΣΔYp</strong></p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>10. Cálculo do erro linear absoluto</h3>
+                    <div class="formula-box">
+                        <p><strong>EL = √(Ex² + Ey²)</strong></p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>11. Tolerância admissível para o erro linear</h3>
+                    <div class="formula-box">
+                        <p><strong>M = P / EL</strong></p>
+                        <p>Referências usuais: 1:1000, 1:5000 e 1:10000.</p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>12. Distribuição do erro de fechamento linear</h3>
+                    <div class="formula-box">
+                        <p><strong>Cxi = -(Ex · Di) / ΣD</strong></p>
+                        <p><strong>Cyi = -(Ey · Di) / ΣD</strong></p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>13. Projeções compensadas</h3>
+                    <div class="formula-box">
+                        <p><strong>ΔXpc = ΔXp + Cxi</strong></p>
+                        <p><strong>ΔYpc = ΔYp + Cyi</strong></p>
+                        <p>Condição: ΣΔXpc = 0 e ΣΔYpc = 0</p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>14. Cálculo das coordenadas totais</h3>
+                    <div class="formula-box">
+                        <p><strong>Xn = Xn-1 + ΔXpc</strong></p>
+                        <p><strong>Yn = Yn-1 + ΔYpc</strong></p>
+                    </div>
+                </article>
+
+                <article class="passo-calculo">
+                    <h3>15. Correção das distâncias</h3>
+                    <div class="formula-box">
+                        <p><strong>D' = √(ΔXpc² + ΔYpc²)</strong></p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <aside class="metodologia-lateral">
+            <h3>Guia rápido</h3>
+            <p><strong>n:</strong> número de lados da poligonal.</p>
+            <p><strong>Σα:</strong> soma dos ângulos observados.</p>
+            <p><strong>e:</strong> erro angular cometido.</p>
+            <p><strong>Tα:</strong> tolerância angular admissível.</p>
+            <p><strong>Ex e Ey:</strong> erros de fechamento nos eixos X e Y.</p>
+            <p><strong>EL:</strong> erro linear absoluto.</p>
+            <p><strong>P:</strong> perímetro da poligonal.</p>
+            <p><strong>M = P / EL:</strong> módulo da escala.</p>
+
+            <h3 style="margin-top: 18px;">Precisão linear</h3>
+            <p><strong>1:1000</strong> → precisão mais simples.</p>
+            <p><strong>1:5000</strong> → precisão intermediária.</p>
+            <p><strong>1:10000</strong> → precisão mais rigorosa.</p>
+
+            <h3 style="margin-top: 18px;">Leitura prática</h3>
+            <p>Quanto maior o denominador, melhor a precisão do levantamento.</p>
+        </aside>
+    </div>
+</main>
+{% endblock %}

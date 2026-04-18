@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Novo Levantamento | Politech{% endblock %}
+
+{% block content %}
+<main class="pagina-interna">
+    <section class="painel-formulario">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Cadastro</span>
+            <h1>Novo levantamento</h1>
+            <p>Preencha os dados iniciais da poligonal para iniciar o cadastro no sistema.</p>
+        </div>
+
+        <form method="POST" class="formulario-bonito formulario-grid">
+            <div class="grupo-form">
+                <label for="nome">Nome do levantamento</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="cidade">Cidade</label>
+                <input type="text" id="cidade" name="cidade">
+            </div>
+
+            <div class="grupo-form">
+                <label for="lados">Número de lados</label>
+                <input type="number" id="lados" name="lados" min="3" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="criterio_precisao">Critério mínimo de precisão</label>
+                <select id="criterio_precisao" name="criterio_precisao" required>
+                    <option value="1000">1:1000</option>
+                    <option value="5000">1:5000</option>
+                    <option value="10000">1:10000</option>
+                </select>
+            </div>
+
+            <div class="grupo-form">
+                <label for="tipo_angulo">Tipo de ângulo</label>
+                <select id="tipo_angulo" name="tipo_angulo" required>
+                    <option value="">Selecione</option>
+                    <option value="interno">Interno</option>
+                    <option value="externo">Externo</option>
+                </select>
+            </div>
+
+            <div class="grupo-form">
+                <label for="sentido">Sentido</label>
+                <select id="sentido" name="sentido" required>
+                    <option value="">Selecione</option>
+                    <option value="horario">Horário</option>
+                    <option value="anti-horario">Anti-horário</option>
+                </select>
+            </div>
+
+            <div class="grupo-form">
+                <label for="azimute_inicial">Azimute inicial</label>
+                <input type="number" step="any" id="azimute_inicial" name="azimute_inicial" min="0" max="359.999999" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="x_inicial">Coordenada X inicial</label>
+                <input type="number" step="any" id="x_inicial" name="x_inicial" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="y_inicial">Coordenada Y inicial</label>
+                <input type="number" step="any" id="y_inicial" name="y_inicial" required>
+            </div>
+
+            <div class="grupo-form grupo-form-destaque">
+                <h3>Observação</h3>
+                <p>
+                    Após salvar este formulário, o sistema abrirá a etapa de cadastro
+                    dos lados, distâncias e ângulos da poligonal.
+                </p>
+            </div>
+
+            <div class="acoes-form acoes-form-largas">
+                <button type="submit" class="botao-principal">Salvar e continuar</button>
+                <a href="/levantamentos" class="botao-secundario">Cancelar</a>
+            </div>
+        </form>
+    </section>
+</main>
+{% endblock %}

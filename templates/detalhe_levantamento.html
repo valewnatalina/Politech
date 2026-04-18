@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Detalhes do Levantamento | Politech{% endblock %}
+
+{% block content %}
+<main class="pagina-interna">
+    <section class="painel-formulario">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Detalhes</span>
+            <h1>{{ levantamento[1] }}</h1>
+            <p>Visualização completa do levantamento cadastrado no sistema.</p>
+        </div>
+
+        <div class="grid-cards">
+            <article class="card">
+                <h3>ID</h3>
+                <p>{{ levantamento[0] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Nome</h3>
+                <p>{{ levantamento[1] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Número de lados</h3>
+                <p>{{ levantamento[2] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Cidade</h3>
+                <p>{{ levantamento[3] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Tipo de ângulo</h3>
+                <p>{{ levantamento[4] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Sentido</h3>
+                <p>{{ levantamento[5] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Azimute inicial</h3>
+                <p>{{ levantamento[6] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>X inicial</h3>
+                <p>{{ levantamento[7] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Y inicial</h3>
+                <p>{{ levantamento[8] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Critério mínimo</h3>
+                <p>1:{{ levantamento[9] }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Status dos lados</h3>
+                <p>
+                    {% if lados and lados|length == levantamento[2] %}
+                        <span class="status-pill status-ok">Completo</span>
+                    {% elif lados %}
+                        <span class="status-pill status-alerta">Parcial</span>
+                    {% else %}
+                        <span class="status-pill status-vazio">Não cadastrado</span>
+                    {% endif %}
+                </p>
+            </article>
+        </div>
+
+        <div class="acoes-detalhe">
+            <a href="/levantamentos" class="acao-painel acao-voltar">Voltar para lista</a>
+            <a href="/levantamentos/{{ levantamento[0] }}/editar" class="acao-painel acao-editar-painel">Editar</a>
+            <a href="/levantamentos/{{ levantamento[0] }}/lados" class="acao-painel acao-lados">
+                {% if lados %}Editar lados{% else %}Cadastrar lados{% endif %}
+            </a>
+            <a href="/levantamentos/{{ levantamento[0] }}/calcular" class="acao-painel acao-calcular">Calcular Poligonal</a>
+            <a href="/levantamentos/{{ levantamento[0] }}/pdf" class="acao-painel acao-pdf">Gerar PDF</a>
+        </div>
+    </section>
+
+    <section class="painel-tabela" style="margin-top: 28px;">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Lados</span>
+            <h1>Lados cadastrados</h1>
+            <p>Confira os pontos, distâncias e ângulos informados para a poligonal.</p>
+        </div>
+
+        {% if lados %}
+        <div class="tabela-container">
+            <table class="tabela-bonita">
+                <thead>
+                    <tr>
+                        <th>Ordem</th>
+                        <th>Ponto</th>
+                        <th>Distância</th>
+                        <th>Graus</th>
+                        <th>Minutos</th>
+                        <th>Segundos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lado in lados %}
+                    <tr>
+                        <td>{{ lado[0] }}</td>
+                        <td>{{ lado[1] }}</td>
+                        <td>{{ "%.3f"|format(lado[2]) }}</td>
+                        <td>{{ lado[3] }}</td>
+                        <td>{{ lado[4] }}</td>
+                        <td>{{ "%.2f"|format(lado[5]) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="estado-vazio">
+            <p>Este levantamento ainda não possui lados cadastrados.</p>
+            <a href="/levantamentos/{{ levantamento[0] }}/lados" class="botao-principal pequeno">Cadastrar agora</a>
+        </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Estatísticas | Politech{% endblock %}
+
+{% block content %}
+<main class="pagina-interna">
+    <section class="painel-formulario">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Painel</span>
+            <h1>Estatísticas do sistema</h1>
+            <p>Resumo geral dos levantamentos cadastrados no Politech.</p>
+        </div>
+
+        <div class="grid-cards">
+            <article class="card">
+                <h3>Total de levantamentos</h3>
+                <p>{{ total_levantamentos }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Média de lados</h3>
+                <p>{{ "%.2f"|format(media_lados) }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Total de lados cadastrados</h3>
+                <p>{{ total_lados_cadastrados }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Cidade com mais levantamentos</h3>
+                <p>{{ cidade_mais_usada }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Quantidade na cidade líder</h3>
+                <p>{{ quantidade_cidade }}</p>
+            </article>
+        </div>
+
+        <div class="acoes-form" style="margin-top: 28px;">
+            <a href="/" class="botao-secundario">Voltar para início</a>
+            <a href="/levantamentos" class="botao-principal">Ver levantamentos</a>
+        </div>
+    </section>
+</main>
+{% endblock %}

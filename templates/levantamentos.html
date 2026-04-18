@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Levantamentos | Politech{% endblock %}
+
+{% block content %}
+<main class="pagina-interna">
+    <section class="painel-tabela">
+        <div class="cabecalho-pagina cabecalho-com-acao">
+            <div>
+                <span class="etiqueta">Registros</span>
+                <h1>Levantamentos cadastrados</h1>
+                <p>Visualize e gerencie os levantamentos já salvos no sistema.</p>
+            </div>
+
+            <div class="acoes-cabecalho">
+                <button type="button" class="botao-secundario" onclick="alternarBusca()">Buscar registros</button>
+                <a href="/novo" class="botao-principal">Novo levantamento</a>
+            </div>
+        </div>
+
+        <div id="painel-busca"
+            class="painel-busca-expandido {% if nome_busca or cidade_busca or lados_busca %}ativo{% endif %}">
+            <form method="GET" action="/levantamentos" class="formulario-bonito">
+                <div class="grupo-form">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" value="{{ nome_busca or '' }}">
+                </div>
+
+                <div class="grupo-form">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" id="cidade" name="cidade" value="{{ cidade_busca or '' }}">
+                </div>
+
+                <div class="grupo-form">
+                    <label for="lados">Número de lados</label>
+                    <input type="number" id="lados" name="lados" value="{{ lados_busca or '' }}">
+                </div>
+
+                <div class="grupo-form">
+                    <label for="ordenacao">Ordenar por</label>
+                    <select id="ordenacao" name="ordenacao">
+                        <option value="mais_recente" {% if ordenacao=='mais_recente' %}selected{% endif %}>Mais recente
+                        </option>
+                        <option value="mais_antigo" {% if ordenacao=='mais_antigo' %}selected{% endif %}>Mais antigo
+                        </option>
+                        <option value="nome_az" {% if ordenacao=='nome_az' %}selected{% endif %}>Nome A-Z</option>
+                        <option value="nome_za" {% if ordenacao=='nome_za' %}selected{% endif %}>Nome Z-A</option>
+                        <option value="menos_lados" {% if ordenacao=='menos_lados' %}selected{% endif %}>Menos lados
+                        </option>
+                        <option value="mais_lados" {% if ordenacao=='mais_lados' %}selected{% endif %}>Mais lados
+                        </option>
+                    </select>
+                </div>
+
+                <div class="acoes-form">
+                    <button type="submit" class="botao-principal">Filtrar</button>
+                    <a href="/levantamentos" class="botao-secundario">Limpar</a>
+                </div>
+            </form>
+        </div>
+
+        {% if levantamentos %}
+        <div class="tabela-container" style="margin-top: 24px;">
+            <table class="tabela-bonita">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Lados</th>
+                        <th>Cidade</th>
+                        <th>Azimute</th>
+                        <th>X inicial</th>
+                        <th>Y inicial</th>
+                        <th>Critério</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lev in levantamentos %}
+                    <tr>
+                        <td>{{ lev[0] }}</td>
+                        <td>{{ lev[1] }}</td>
+                        <td>{{ lev[2] }}</td>
+                        <td>{{ lev[3] }}</td>
+                        <td>{{ lev[6] }}</td>
+                        <td>{{ lev[7] }}</td>
+                        <td>{{ lev[8] }}</td>
+                        <td>1:{{ lev[9] }}</td>
+                        <td>
+                            <div class="acoes-tabela acoes-tabela-linha">
+                                <a href="/levantamentos/{{ lev[0] }}" class="acao-tabela acao-detalhes">Detalhes</a>
+                                <a href="/levantamentos/{{ lev[0] }}/editar" class="acao-tabela acao-editar">Editar</a>
+                                <form action="/levantamentos/{{ lev[0] }}/excluir" method="POST"
+                                    class="form-acao-excluir"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este levantamento?');">
+                                    <button type="submit" class="acao-tabela acao-excluir">Excluir</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="estado-vazio">
+            <p>Nenhum levantamento encontrado com esses filtros.</p>
+            <a href="/novo" class="botao-principal pequeno">Criar novo levantamento</a>
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="painel-formulario" style="margin-top: 28px;">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Estatísticas</span>
+            <h1>Visão geral do sistema</h1>
+            <p>Resumo geral dos registros armazenados no Politech.</p>
+        </div>
+
+        <div class="grid-cards">
+            <article class="card">
+                <h3>Total de levantamentos</h3>
+                <p>{{ total_levantamentos }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Cidade com mais registros</h3>
+                <p>{{ cidade_mais_usada }}</p>
+            </article>
+
+            <article class="card">
+                <h3>Mês de maior cadastro</h3>
+                <p>{{ mes_maior_cadastro }}</p>
+            </article>
+        </div>
+    </section>
+</main>
+
+<script>
+    function alternarBusca() {
+        const painel = document.getElementById("painel-busca");
+        painel.classList.toggle("ativo");
+    }
+</script>
+{% endblock %}

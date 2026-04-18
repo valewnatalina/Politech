@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Levantamento | Politech{% endblock %}
+
+{% block content %}
+<main class="pagina-interna">
+    <section class="painel-formulario">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Edição</span>
+            <h1>Editar levantamento</h1>
+            <p>Atualize os dados principais deste levantamento.</p>
+        </div>
+
+        <form method="POST" class="formulario-bonito formulario-grid">
+            <div class="grupo-form">
+                <label for="nome">Nome do levantamento</label>
+                <input type="text" id="nome" name="nome" value="{{ levantamento[1] }}" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="cidade">Cidade</label>
+                <input type="text" id="cidade" name="cidade" value="{{ levantamento[3] }}">
+            </div>
+
+            <div class="grupo-form">
+                <label for="lados">Número de lados</label>
+                <input type="number" id="lados" name="lados" min="3" value="{{ levantamento[2] }}" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="criterio_precisao">Critério mínimo de precisão</label>
+                <select id="criterio_precisao" name="criterio_precisao" required>
+                    <option value="1000" {% if levantamento[9] == 1000 %}selected{% endif %}>1:1000</option>
+                    <option value="5000" {% if levantamento[9] == 5000 %}selected{% endif %}>1:5000</option>
+                    <option value="10000" {% if levantamento[9] == 10000 %}selected{% endif %}>1:10000</option>
+                </select>
+            </div>
+
+            <div class="grupo-form">
+                <label for="tipo_angulo">Tipo de ângulo</label>
+                <select id="tipo_angulo" name="tipo_angulo" required>
+                    <option value="interno" {% if levantamento[4] == 'interno' %}selected{% endif %}>Interno</option>
+                    <option value="externo" {% if levantamento[4] == 'externo' %}selected{% endif %}>Externo</option>
+                </select>
+            </div>
+
+            <div class="grupo-form">
+                <label for="sentido">Sentido</label>
+                <select id="sentido" name="sentido" required>
+                    <option value="horario" {% if levantamento[5] == 'horario' %}selected{% endif %}>Horário</option>
+                    <option value="anti-horario" {% if levantamento[5] == 'anti-horario' %}selected{% endif %}>Anti-horário</option>
+                </select>
+            </div>
+
+            <div class="grupo-form">
+                <label for="azimute_inicial">Azimute inicial</label>
+                <input type="number" step="any" id="azimute_inicial" name="azimute_inicial" min="0" max="359.999999" value="{{ levantamento[6] }}" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="x_inicial">Coordenada X inicial</label>
+                <input type="number" step="any" id="x_inicial" name="x_inicial" value="{{ levantamento[7] }}" required>
+            </div>
+
+            <div class="grupo-form">
+                <label for="y_inicial">Coordenada Y inicial</label>
+                <input type="number" step="any" id="y_inicial" name="y_inicial" value="{{ levantamento[8] }}" required>
+            </div>
+
+            <div class="grupo-form grupo-form-destaque">
+                <h3>Atenção</h3>
+                <p>
+                    Se você alterar o número de lados, revise também o cadastro dos lados
+                    para manter o levantamento consistente.
+                </p>
+            </div>
+
+            <div class="acoes-form acoes-form-largas">
+                <button type="submit" class="botao-principal">Salvar alterações</button>
+                <a href="/levantamentos/{{ levantamento[0] }}" class="botao-secundario">Cancelar</a>
+            </div>
+        </form>
+    </section>
+</main>
+{% endblock %}

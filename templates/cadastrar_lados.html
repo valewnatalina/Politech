@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastrar Lados | Politech{% endblock %}
+
+{% block content %}
+<main class="pagina-interna">
+    <section class="painel-formulario">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Lados da poligonal</span>
+            <h1>{{ levantamento[1] }}</h1>
+            <p>
+                Informe os pontos, distâncias e ângulos correspondentes aos
+                {{ levantamento[2] }} lados do levantamento.
+            </p>
+        </div>
+
+        <form method="POST" class="formulario-lados">
+            {% for i in range(1, levantamento[2] + 1) %}
+            <article class="bloco-lado">
+                <div class="bloco-lado-topo">
+                    <span class="lado-indice">Lado {{ i }}</span>
+                    <h3>Dados do lado {{ i }}</h3>
+                </div>
+
+                <div class="formulario-grid-lados">
+                    <div class="grupo-form">
+                        <label for="nome_ponto_{{ i }}">Nome do ponto</label>
+                        <input type="text" id="nome_ponto_{{ i }}" name="nome_ponto_{{ i }}" required>
+                    </div>
+
+                    <div class="grupo-form">
+                        <label for="distancia_{{ i }}">Distância</label>
+                        <input type="number" step="any" min="0.000001" id="distancia_{{ i }}" name="distancia_{{ i }}" required>
+                    </div>
+
+                    <div class="grupo-form">
+                        <label for="angulo_graus_{{ i }}">Graus</label>
+                        <input type="number" min="0" id="angulo_graus_{{ i }}" name="angulo_graus_{{ i }}" required>
+                    </div>
+
+                    <div class="grupo-form">
+                        <label for="angulo_minutos_{{ i }}">Minutos</label>
+                        <input type="number" min="0" max="59" id="angulo_minutos_{{ i }}" name="angulo_minutos_{{ i }}" required>
+                    </div>
+
+                    <div class="grupo-form">
+                        <label for="angulo_segundos_{{ i }}">Segundos</label>
+                        <input type="number" step="any" min="0" max="59.999999" id="angulo_segundos_{{ i }}" name="angulo_segundos_{{ i }}" required>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+
+            <div class="acoes-form acoes-form-largas">
+                <button type="submit" class="botao-principal">Salvar lados</button>
+                <a href="/levantamentos/{{ levantamento[0] }}" class="botao-secundario">Voltar</a>
+            </div>
+        </form>
+    </section>
+</main>
+{% endblock %}

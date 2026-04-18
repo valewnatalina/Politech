@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Politech{% endblock %}
+
+{% block content %}
+<main>
+    <section class="hero hero-com-fundo">
+        <div class="hero-texto">
+            <span class="etiqueta etiqueta-hero">Topografia inteligente</span>
+
+            <h1>
+                <span class="logo-destaque">Politech</span>: cálculo e ajuste de poligonais fechadas
+            </h1>
+
+            <p>
+                Sistema voltado ao cálculo e ajuste de poligonais fechadas, com
+                detalhamento completo de cada etapa: ângulos, azimutes, projeções,
+                compensações e verificação de fechamento.
+            </p>
+
+            <div class="acoes">
+                <a href="/levantamentos" class="botao-principal">Ver levantamentos</a>
+                <a href="/metodologia" class="botao-secundario botao-secundario-branco">Ver o passo a passo</a>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <div class="card-interno card-objetivo">
+                <h3>Objetivo</h3>
+                <p>
+                    Reunir cadastro, cálculo, análise e explicação técnica em um ambiente
+                    único, deixando evidente como cada poligonal foi ajustada.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao-info">
+        <div class="imagem-fake imagem-sistema"></div>
+
+        <div class="texto-info">
+            <h2>O que o sistema faz</h2>
+            <p>
+                O Politech permite cadastrar levantamentos, inserir lados e ângulos,
+                calcular azimutes, projeções, compensações, coordenadas ajustadas,
+                distâncias corrigidas e gerar relatórios técnicos em PDF.
+            </p>
+        </div>
+    </section>
+
+    <section class="bloco-poligonal">
+        <div class="bloco-poligonal-topo">
+            <span class="etiqueta">Conceito essencial</span>
+
+            <div class="titulo-poligonal">
+                <h2>O que é uma poligonal fechada?</h2>
+            </div>
+
+            <p>
+                Base fundamental dos cálculos realizados no sistema.
+            </p>
+        </div>
+
+        <div class="card-poligonal-interativo">
+            <button class="botao-poligonal" onclick="alternarPoligonal()">
+                <span>Ver explicação completa</span>
+                <span id="icone-poligonal">+</span>
+            </button>
+
+            <div id="conteudo-poligonal" class="conteudo-poligonal">
+                <p>
+                    Uma <strong>poligonal fechada</strong> é uma sequência de lados
+                    conectados que forma um percurso fechado, retornando ao ponto inicial
+                    ou a um ponto de coordenadas conhecidas.
+                </p>
+
+                <p>
+                    Isso permite calcular e analisar os <strong>erros de fechamento</strong>,
+                    distribuir correções e obter coordenadas ajustadas com maior precisão.
+                </p>
+
+                <p>
+                    É por isso que esse tipo de levantamento é amplamente utilizado em
+                    topografia: ele possibilita <strong>controle, verificação e confiabilidade</strong>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cards">
+        <h2>Principais funções</h2>
+
+        <div class="grid-cards">
+            <article class="card">
+                <h3>Cadastro de levantamentos</h3>
+                <p>Registra os dados principais da poligonal e organiza os projetos salvos.</p>
+            </article>
+
+            <article class="card">
+                <h3>Cálculo topográfico</h3>
+                <p>Executa ajustes angulares e lineares com passo a passo completo.</p>
+            </article>
+
+            <article class="card">
+                <h3>Relatórios e análise</h3>
+                <p>Mostra tabelas, desenho da poligonal, estatísticas e exportação em PDF.</p>
+            </article>
+        </div>
+    </section>
+</main>
+
+<script>
+    function alternarPoligonal() {
+        const conteudo = document.getElementById("conteudo-poligonal");
+        const icone = document.getElementById("icone-poligonal");
+
+        conteudo.classList.toggle("ativo");
+        icone.textContent = conteudo.classList.contains("ativo") ? "−" : "+";
+    }
+</script>
+{% endblock %}

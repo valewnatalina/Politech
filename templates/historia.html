@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}História e Contatos | Politech{% endblock %}
+
+{% block content %}
+<main class="pagina-interna">
+    <section class="painel-formulario">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Sobre</span>
+            <h1>História do projeto</h1>
+            <p>Como surgiu a ideia do sistema e qual a sua finalidade.</p>
+        </div>
+
+        <div class="grid-cards historia-cards">
+            <article class="card card-historia">
+                <div class="icone-historia">◔</div>
+                <h3>Como surgiu</h3>
+                <p>
+                    O projeto começou como uma atividade da disciplina de Introdução
+                    à Programação em Python. A proposta inicial era desenvolver algo
+                    simples, mas aplicado a alguma área da Engenharia Civil.
+                </p>
+            </article>
+
+            <article class="card card-historia">
+                <div class="icone-historia">⚑</div>
+                <h3>Por que foi criado</h3>
+                <p>
+                    A área escolhida foi a Topografia, porque esse era um dos tópicos
+                    vistos na disciplina e também um conteúdo extenso, no qual muitos
+                    alunos apresentavam dificuldade. Como o processo de cálculo da
+                    poligonal é longo e sujeito a erros cumulativos, isso acabava
+                    impactando negativamente o desempenho em avaliações.
+                </p>
+            </article>
+
+            <article class="card card-historia">
+                <div class="icone-historia">✦</div>
+                <h3>Finalidade</h3>
+                <p>
+                    O objetivo do sistema é não apenas fornecer o resultado final,
+                    mas mostrar claramente como cada etapa do cálculo foi feita.
+                    Isso ajuda no entendimento do processo, especialmente porque
+                    softwares mais modernos geralmente exibem apenas resultados
+                    finais de algumas etapas, dificultando a compreensão completa
+                    do ajuste da poligonal.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section class="painel-formulario" style="margin-top: 28px;">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Contatos</span>
+            <h1>Informações de contato</h1>
+            <p>Canal institucional do projeto.</p>
+        </div>
+
+        <div class="grid-cards">
+            <article class="card">
+                <h3>Email</h3>
+                <p>natalina.oliveira@aluno.ufca.edu.br</p>
+            </article>
+
+            <article class="card">
+                <h3>Curso</h3>
+                <p>Engenharia Civil</p>
+            </article>
+
+            <article class="card">
+                <h3>Projeto</h3>
+                <p>Sem fins lucrativos.</p>
+            </article>
+        </div>
+    </section>
+</main>
+{% endblock %}

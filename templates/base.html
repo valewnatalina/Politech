@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Politech{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="topo">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Politech">
+            <span class="logo-texto">Politech</span>
+        </div>
+
+        <nav class="menu">
+            <a href="/" class="{% if pagina_ativa == 'inicio' %}ativo{% endif %}">Início</a>
+            <a href="/levantamentos" class="{% if pagina_ativa == 'levantamentos' %}ativo{% endif %}">Levantamentos</a>
+            <a href="/metodologia" class="{% if pagina_ativa == 'metodologia' %}ativo{% endif %}">Passo a passo</a>
+            <a href="/historia" class="{% if pagina_ativa == 'historia' %}ativo{% endif %}">História e Contatos</a>
+        </nav>
+
+        <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+        <a href="/levantamentos" class="botao-topo">Acessar sistema</a>
+    </header>
+
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+        <div class="flash-area">
+            {% for categoria, mensagem in mensagens %}
+                <div class="flash-msg flash-{{ categoria }}">{{ mensagem }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

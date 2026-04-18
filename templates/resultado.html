@@ -1,0 +1,456 @@
+{% extends "base.html" %}
+
+{% block title %}Resultado | Politech{% endblock %}
+
+{% block content %}
+<main class="pagina-interna">
+    <section class="painel-formulario">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Resultado do cálculo</span>
+            <h1>{{ nome }}</h1>
+            <p>
+                Visualização técnica da poligonal com fórmulas, sequência de cálculo
+                em 15 etapas, compensações, coordenadas e conferência final.
+            </p>
+        </div>
+
+        <div class="atalhos-resultado">
+            <a href="#resumo-geral" class="atalho-resultado-link">Resumo</a>
+            <a href="#passo-a-passo" class="atalho-resultado-link">15 etapas aplicadas</a>
+            <a href="#detalhamento-lados" class="atalho-resultado-link">Lados</a>
+            <a href="#coordenadas-pontos" class="atalho-resultado-link">Coordenadas</a>
+            <a href="#distancias-corrigidas" class="atalho-resultado-link">Distâncias</a>
+            <a href="#fechamento-final" class="atalho-resultado-link">Fechamento</a>
+            <a href="#grafico-poligonal" class="atalho-resultado-link">Desenho</a>
+        </div>
+
+        <div class="resumo-tecnico-automatico" id="resumo-geral">
+            <h3>Leitura técnica automática</h3>
+            <p>
+                Foi utilizada uma poligonal com ângulos <strong>{{ tipo_angulo }}</strong>
+                e caminhamento no sentido <strong>{{ sentido }}</strong>.
+                A soma dos ângulos medidos foi <strong>{{ "%.0f"|format(soma_angulos) }}</strong>,
+                enquanto a soma teórica foi <strong>{{ "%.0f"|format(soma_teorica) }}</strong>.
+            </p>
+
+            <p>
+                O erro angular encontrado foi <strong>{{ "%.0f"|format(erro_angular) }}</strong>,
+                equivalente a <strong>{{ "%.0f"|format(erro_angular_segundos) }}"</strong>.
+                {% if erro_aceitavel %}
+                    O erro ficou <strong>dentro da tolerância angular</strong>.
+                {% else %}
+                    O erro ficou <strong>fora da tolerância angular</strong>.
+                {% endif %}
+            </p>
+
+            <p>
+                O erro linear absoluto foi <strong>{{ "%.3f"|format(erro_linear) }}</strong>,
+                com perímetro de <strong>{{ "%.3f"|format(perimetro) }}</strong>.
+                O módulo da escala resultou em
+                <strong>
+                    {% if erro_linear == 0 %}
+                        Infinito
+                    {% else %}
+                        1:{{ "%.0f"|format(modulo_escala) }}
+                    {% endif %}
+                </strong>,
+                sendo comparado ao critério mínimo de <strong>1:{{ criterio_minimo }}</strong>.
+            </p>
+        </div>
+
+        <div class="grid-cards resultado-cards">
+            <article class="card card-resultado">
+                <h3>Soma dos ângulos</h3>
+                <p>{{ "%.0f"|format(soma_angulos) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Soma teórica</h3>
+                <p>{{ "%.0f"|format(soma_teorica) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Erro angular</h3>
+                <p>{{ "%.0f"|format(erro_angular) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Erro angular (seg)</h3>
+                <p>{{ "%.0f"|format(erro_angular_segundos) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Tolerância angular</h3>
+                <p>{{ "%.0f"|format(tolerancia_segundos) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Correção por ângulo</h3>
+                <p>{{ "%.0f"|format(correcao_por_angulo) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Erro em X (Ex)</h3>
+                <p>{{ "%.3f"|format(ex) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Erro em Y (Ey)</h3>
+                <p>{{ "%.3f"|format(ey) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Erro linear</h3>
+                <p>{{ "%.3f"|format(erro_linear) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Perímetro</h3>
+                <p>{{ "%.3f"|format(perimetro) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Módulo da escala</h3>
+                <p>
+                    {% if erro_linear == 0 %}
+                        Infinito
+                    {% else %}
+                        1:{{ "%.0f"|format(modulo_escala) }}
+                    {% endif %}
+                </p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Critério mínimo</h3>
+                <p>1:{{ criterio_minimo }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Classificação</h3>
+                <p>{{ classificacao_precisao }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Fechamento em ΔXcomp</h3>
+                <p>{{ "%.3f"|format(soma_dx_comp) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Fechamento em ΔYcomp</h3>
+                <p>{{ "%.3f"|format(soma_dy_comp) }}</p>
+            </article>
+
+            <article class="card card-resultado">
+                <h3>Situação final</h3>
+                <p>
+                    {% if precisao_aprovada %}
+                        <span class="status-pill status-ok">Aprovada</span>
+                    {% else %}
+                        <span class="status-pill status-alerta">Reprovada</span>
+                    {% endif %}
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section class="painel-formulario bloco-resultado" id="passo-a-passo" style="margin-top: 28px;">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">15 etapas aplicadas</span>
+            <h1>Descrição do cálculo desta poligonal</h1>
+            <p>
+                Aqui a sequência está aplicada especificamente ao levantamento atual,
+                sem repetir a metodologia geral.
+            </p>
+        </div>
+
+        <div class="passos-calculo">
+            <article class="passo-calculo">
+                <h3>1. Soma dos ângulos da poligonal</h3>
+                <div class="formula-box">
+                    <p>A soma dos ângulos medidos em campo para esta poligonal foi <strong>{{ "%.0f"|format(soma_angulos) }}</strong>.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>2. Soma teórica correspondente</h3>
+                <div class="formula-box">
+                    <p>Para esta poligonal, usando a fórmula <strong>{{ formula_soma_teorica }}</strong>, obteve-se a soma teórica de <strong>{{ "%.0f"|format(soma_teorica) }}</strong>.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>3. Erro angular cometido</h3>
+                <div class="formula-box">
+                    <p>Comparando a soma medida com a soma teórica, o erro angular encontrado foi <strong>{{ "%.0f"|format(erro_angular) }}</strong>.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>4. Verificação da tolerância angular</h3>
+                <div class="formula-box">
+                    <p>A tolerância angular admissível foi <strong>{{ "%.0f"|format(tolerancia_segundos) }}"</strong>.</p>
+                    <p>O erro angular em segundos foi <strong>{{ "%.0f"|format(erro_angular_segundos) }}"</strong>.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>5. Correção angular aplicada</h3>
+                <div class="formula-box">
+                    <p>A correção distribuída por ângulo foi <strong>{{ "%.0f"|format(correcao_por_angulo) }}</strong>.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>6. Ângulos compensados</h3>
+                <div class="formula-box">
+                    <p>Após a distribuição da correção, cada ângulo passou a ser considerado na forma compensada, e esses valores foram usados no cálculo dos azimutes.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>7. Azimutes dos alinhamentos</h3>
+                <div class="formula-box">
+                    <p>Os azimutes foram determinados considerando o tipo de ângulo <strong>{{ tipo_angulo }}</strong> e o sentido <strong>{{ sentido }}</strong>, seguindo a regra da sequência de cálculo da poligonal fechada.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>8. Distâncias horizontais adotadas</h3>
+                <div class="formula-box">
+                    <p>Para cada lado, foram utilizadas as distâncias cadastradas no levantamento, servindo de base para o cálculo das projeções parciais.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>9. Projeções parciais</h3>
+                <div class="formula-box">
+                    <p>Com base nas distâncias e azimutes, foram calculadas as projeções ΔX e ΔY de cada alinhamento.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>10. Erros de fechamento nos eixos</h3>
+                <div class="formula-box">
+                    <p>Somando as projeções em X, obteve-se <strong>Ex = {{ "%.3f"|format(ex) }}</strong>.</p>
+                    <p>Somando as projeções em Y, obteve-se <strong>Ey = {{ "%.3f"|format(ey) }}</strong>.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>11. Erro linear absoluto e precisão</h3>
+                <div class="formula-box">
+                    <p>O erro linear absoluto foi <strong>{{ "%.3f"|format(erro_linear) }}</strong>.</p>
+                    <p>O módulo da escala resultou em
+                        <strong>
+                            {% if erro_linear == 0 %}
+                                Infinito
+                            {% else %}
+                                1:{{ "%.0f"|format(modulo_escala) }}
+                            {% endif %}
+                        </strong>,
+                        comparado ao critério mínimo de <strong>1:{{ criterio_minimo }}</strong>.
+                    </p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>12. Distribuição do erro linear</h3>
+                <div class="formula-box">
+                    <p>Os erros de fechamento linear foram distribuídos proporcionalmente às distâncias de cada lado, gerando as correções em X e Y.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>13. Projeções compensadas</h3>
+                <div class="formula-box">
+                    <p>Após aplicar as correções, obteve-se a condição de fechamento:</p>
+                    <p><strong>ΣΔXcomp = {{ "%.3f"|format(soma_dx_comp) }}</strong></p>
+                    <p><strong>ΣΔYcomp = {{ "%.3f"|format(soma_dy_comp) }}</strong></p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>14. Coordenadas totais</h3>
+                <div class="formula-box">
+                    <p>As coordenadas finais de cada vértice foram obtidas pela soma sucessiva das projeções compensadas às coordenadas anteriores.</p>
+                </div>
+            </article>
+
+            <article class="passo-calculo">
+                <h3>15. Distâncias corrigidas</h3>
+                <div class="formula-box">
+                    <p>Ao final, foram calculadas as distâncias corrigidas de cada lado com base nas projeções compensadas.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="painel-formulario bloco-resultado" id="detalhamento-lados" style="margin-top: 28px;">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Detalhamento por lado</span>
+            <h1>Cálculo de cada lado</h1>
+            <p>Azimutes, projeções naturais e projeções compensadas por alinhamento.</p>
+        </div>
+
+        <div class="passos-calculo">
+            {% for i in range(distancias|length) %}
+            <article class="passo-calculo">
+                <h3>Lado {{ i + 1 }} — {{ nomes_pontos[i] }}</h3>
+
+                <div class="formula-box">
+                    <p><strong>Distância:</strong> {{ "%.3f"|format(distancias[i]) }}</p>
+                    <p><strong>Ângulo medido:</strong> {{ "%.0f"|format(angulos[i]) }}</p>
+                    <p><strong>Ângulo compensado:</strong> {{ "%.0f"|format(angulos_compensados[i]) }}</p>
+                    <p><strong>Azimute:</strong> {{ "%.0f"|format(azimutes[i]) }}</p>
+                </div>
+
+                <div class="formula-box" style="margin-top: 12px;">
+                    <p><strong>ΔX:</strong> {{ "%.3f"|format(dx[i]) }}</p>
+                    <p><strong>ΔY:</strong> {{ "%.3f"|format(dy[i]) }}</p>
+                    <p><strong>Cx:</strong> {{ "%.3f"|format(correcoes_x[i]) }}</p>
+                    <p><strong>Cy:</strong> {{ "%.3f"|format(correcoes_y[i]) }}</p>
+                    <p><strong>ΔX compensado:</strong> {{ "%.3f"|format(dx_comp[i]) }}</p>
+                    <p><strong>ΔY compensado:</strong> {{ "%.3f"|format(dy_comp[i]) }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="painel-formulario bloco-resultado" id="coordenadas-pontos" style="margin-top: 28px;">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Coordenadas</span>
+            <h1>Coordenadas totais dos pontos</h1>
+            <p>Atualização sucessiva das coordenadas com base nas projeções compensadas.</p>
+        </div>
+
+        <div class="passos-calculo">
+            {% for i in range(xs|length) %}
+            <article class="passo-calculo">
+                <h3>Ponto {{ i + 1 }}</h3>
+                <div class="formula-box">
+                    <p><strong>X:</strong> {{ "%.3f"|format(xs[i]) }}</p>
+                    <p><strong>Y:</strong> {{ "%.3f"|format(ys[i]) }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="painel-formulario bloco-resultado" id="distancias-corrigidas" style="margin-top: 28px;">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Distâncias corrigidas</span>
+            <h1>Correção das distâncias</h1>
+            <p>Distância corrigida obtida a partir das projeções compensadas.</p>
+        </div>
+
+        <div class="tabela-container">
+            <table class="tabela-bonita">
+                <thead>
+                    <tr>
+                        <th>Lado</th>
+                        <th>Ponto</th>
+                        <th>Distância original</th>
+                        <th>Distância corrigida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(distancias_corrigidas|length) %}
+                    <tr>
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ nomes_pontos[i] }}</td>
+                        <td>{{ "%.3f"|format(distancias[i]) }}</td>
+                        <td>{{ "%.3f"|format(distancias_corrigidas[i]) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="painel-formulario bloco-resultado" id="fechamento-final" style="margin-top: 28px;">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Fechamento</span>
+            <h1>Quadro final de verificação</h1>
+            <p>Conferência do ponto inicial, ponto final e da condição de fechamento.</p>
+        </div>
+
+        <div class="quadro-fechamento">
+            <div class="item-fechamento">
+                <h3>Ponto inicial</h3>
+                <p>X = {{ "%.3f"|format(xs[0]) }}</p>
+                <p>Y = {{ "%.3f"|format(ys[0]) }}</p>
+            </div>
+
+            <div class="item-fechamento">
+                <h3>Ponto final compensado</h3>
+                <p>X = {{ "%.3f"|format(xs[-1]) }}</p>
+                <p>Y = {{ "%.3f"|format(ys[-1]) }}</p>
+            </div>
+
+            <div class="item-fechamento">
+                <h3>Condição de fechamento</h3>
+                <p>ΣΔXcomp = {{ "%.3f"|format(soma_dx_comp) }}</p>
+                <p>ΣΔYcomp = {{ "%.3f"|format(soma_dy_comp) }}</p>
+            </div>
+
+            <div class="item-fechamento">
+                <h3>Conclusão</h3>
+                <p>
+                    {% if precisao_aprovada %}
+                        <span class="status-pill status-ok">Poligonal aprovada</span>
+                    {% else %}
+                        <span class="status-pill status-alerta">Poligonal reprovada</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="painel-formulario bloco-resultado" id="grafico-poligonal" style="margin-top: 28px;">
+        <div class="cabecalho-pagina">
+            <span class="etiqueta">Representação gráfica</span>
+            <h1>Desenho da poligonal</h1>
+            <p>Visualização com moldura, eixos e identificação real dos pontos.</p>
+        </div>
+
+        <div class="grafico-poligonal-box">
+            <svg width="760" height="500" viewBox="0 0 760 500" class="grafico-poligonal">
+                <rect x="{{ bbox[0] }}" y="{{ bbox[1] }}" width="{{ bbox[2] }}" height="{{ bbox[3] }}" fill="none" stroke="#d8dfcf" stroke-width="1" />
+                <line x1="{{ eixo_x[0] }}" y1="{{ eixo_x[1] }}" x2="{{ eixo_x[2] }}" y2="{{ eixo_x[3] }}" stroke="#c8d1bf" stroke-width="1" />
+                <line x1="{{ eixo_y[0] }}" y1="{{ eixo_y[1] }}" x2="{{ eixo_y[2] }}" y2="{{ eixo_y[3] }}" stroke="#c8d1bf" stroke-width="1" />
+
+                <polyline points="{{ polyline_svg }}" fill="none" stroke="#5f844f" stroke-width="3" />
+
+                {% for p in pontos_svg %}
+                <circle cx="{{ p.x }}" cy="{{ p.y }}" r="5" fill="#2e4629"></circle>
+                <text x="{{ p.x + 8 }}" y="{{ p.y - 8 }}" font-size="12" fill="#2e4629" font-weight="bold">
+                    {{ p.nome }}
+                </text>
+                {% endfor %}
+            </svg>
+        </div>
+
+        <form method="POST" action="/levantamentos/{{ id_levantamento }}/pdf" class="form-pdf-relatorio">
+            <div class="grupo-form">
+                <label for="nome_responsavel">Nome da pessoa responsável</label>
+                <input type="text" id="nome_responsavel" name="nome_responsavel" placeholder="Ex.: Natalina de Freitas">
+            </div>
+
+            <div class="grupo-form">
+                <label for="data_levantamento">Data do levantamento</label>
+                <input type="date" id="data_levantamento" name="data_levantamento">
+            </div>
+
+            <div class="acoes-form">
+                <button type="submit" class="botao-principal">Gerar PDF completo</button>
+            </div>
+        </form>
+
+        <div class="acoes-detalhe">
+            <a href="/levantamentos/{{ id_levantamento }}" class="acao-painel acao-voltar">Voltar aos detalhes</a>
+            <a href="/levantamentos" class="acao-painel acao-lados">Ver levantamentos</a>
+        </div>
+    </section>
+</main>
+{% endblock %}

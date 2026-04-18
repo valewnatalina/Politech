@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Banco de dados local
+*.db
+*.sqlite3
+
+# Pastas geradas automaticamente
+instance/
+graficos/
+relatorios/
+levantamentos/
+
+# VS Code
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db

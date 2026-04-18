@@ -49,28 +49,6 @@ O sistema segue a sequência clássica de cálculo e ajuste de poligonais fechad
 
 ---
 
-## 📂 Estrutura do projeto
-
-```bash
-politech/
-├─ app.py
-├─ models.py
-├─ database.py
-├─ services/
-│  └─ poligonal_service.py
-├─ templates/
-│  ├─ index.html
-│  ├─ levantamentos.html
-│  ├─ novo_levantamento.html
-│  ├─ resultado.html
-│  └─ ...
-├─ static/
-│  ├─ css/
-│  ├─ js/
-│  └─ img/
-├─ instance/
-├─ graficos/
-
 # Clonar o repositório
 git clone https://github.com/SEU-USUARIO/politech.git
 
@@ -99,3 +77,27 @@ Atualmente, o sistema está com a estrutura principal da interface e organizaç�
 🚀 Próximas melhorias
 Implementação completa do banco de dados (persistência dos levantamentos)
 Finalização do motor de cálculo da poligonal
+
+
+## 📂 Estrutura do projeto
+
+```bash
+politech/
+├─ app.py
+├─ models.py
+├─ database.py
+├─ services/
+│  └─ poligonal_service.py
+├─ templates/
+│  ├─ index.html
+│  ├─ levantamentos.html
+│  ├─ novo_levantamento.html
+│  ├─ resultado.html
+│  └─ ...
+├─ static/
+│  ├─ css/
+│  ├─ js/
+│  └─ img/
+├─ instance/
+├─ graficos/
+
